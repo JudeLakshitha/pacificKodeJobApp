@@ -19,6 +19,8 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   //List<Job> jobList = [];
+  List<Job> filterJobList = jobList;
+  TextEditingController searchTextController = TextEditingController();
   bool isLoading = false;
 
   @override
@@ -58,39 +60,98 @@ class HomeScreenState extends State<HomeScreen> {
                 ),
                 centerTitle: true,
                 backgroundColor: Colors.amber,
+                actions: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.bookmark_border,
+                      color: Colors.black,
+                      size: 24,
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/favoriteScreen');
+                    },
+                  ),
+                ],
               ),
               body: SafeArea(
                 child: isLoading
-                    ? Center(child: CircularProgressIndicator())
+                    ? Center(
+                        child: CircularProgressIndicator(color: Colors.amber),
+                      )
                     : Column(
                         children: [
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.bookmark_border,
-                                  color: Colors.black,
-                                  size: 24,
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: SizedBox(
+                                    height: 70,
+                                    child: TextField(
+                                      controller: searchTextController,
+                                      onChanged: (value) {
+                                        final String searchText =
+                                            searchTextController.text.trim();
+                                        setState(() {
+                                          filterJobList = jobList.where((job) {
+                                            return job.title
+                                                    .toLowerCase()
+                                                    .contains(
+                                                      searchText.toLowerCase(),
+                                                    ) ||
+                                                job.location
+                                                    .toLowerCase()
+                                                    .contains(
+                                                      searchText.toLowerCase(),
+                                                    );
+                                          }).toList();
+                                        });
+                                      },
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      decoration: InputDecoration(
+                                        hintText:
+                                            'Search using job title or location',
+                                        hintStyle: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.grey,
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
+                                          borderSide: BorderSide(
+                                            color: Colors.black,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/favoriteScreen',
-                                  );
-                                },
                               ),
-                            ),
+                            ],
                           ),
                           jobList.isNotEmpty
                               ? Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: ListView.separated(
-                                      itemCount: jobList.length,
+                                      itemCount: filterJobList.length,
                                       itemBuilder: (context, index) {
-                                        final job = jobList[index];
+                                        final job = filterJobList[index];
                                         return JobCard(
                                           job: job,
                                           favList: favJobList,

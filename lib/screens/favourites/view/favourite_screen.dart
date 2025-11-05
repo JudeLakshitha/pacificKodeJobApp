@@ -23,6 +23,7 @@ class FavouriteScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             favJobList.isNotEmpty
                 ? Expanded(
@@ -52,7 +53,7 @@ class FavouriteScreen extends StatelessWidget {
                   )
                 : Center(
                     child: Text(
-                      'No Favourite Jobs',
+                      'No Favourite Jobs!',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
