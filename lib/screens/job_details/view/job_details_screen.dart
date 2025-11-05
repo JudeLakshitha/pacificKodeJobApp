@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:job_app/models/job.dart';
 
-
 class JobDetailsScreen extends StatelessWidget {
   static const routeName = '/jobDetailScreen';
 
@@ -13,9 +12,14 @@ class JobDetailsScreen extends StatelessWidget {
     final Job job = ModalRoute.of(context)!.settings.arguments as Job;
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text('Job Details',style: TextStyle(
-        fontWeight: FontWeight.w700
-      ),), centerTitle: true, backgroundColor: Colors.amber),
+      appBar: AppBar(
+        title: Text(
+          'Job Details',
+          style: TextStyle(fontWeight: FontWeight.w700),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.amber,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

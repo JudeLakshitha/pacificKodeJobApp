@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:job_app/repositories/home_repository.dart';
 import 'package:job_app/screens/home/bloc/home_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../common/common.dart';
 import '../../../data/data.dart';
+import '../../../models/job.dart';
 import '../../../widgets/job_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,6 +35,7 @@ class HomeScreenState extends State<HomeScreen> {
             setState(() {
               isLoading = false;
               //jobList = state.jobList;
+              //filterJobList = state.jobList;
             });
           } else if (state is ErrorJobListState) {
             setState(() {
@@ -48,11 +51,38 @@ class HomeScreenState extends State<HomeScreen> {
           builder: (context, state) {
             return Scaffold(
               backgroundColor: Colors.white,
+              appBar: AppBar(
+                title: Text(
+                  'Jobs',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
+                centerTitle: true,
+                backgroundColor: Colors.amber,
+              ),
               body: SafeArea(
                 child: isLoading
                     ? Center(child: CircularProgressIndicator())
                     : Column(
                         children: [
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.bookmark_border,
+                                  color: Colors.black,
+                                  size: 24,
+                                ),
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/favoriteScreen',
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
                           jobList.isNotEmpty
                               ? Expanded(
                                   child: Padding(
@@ -63,6 +93,7 @@ class HomeScreenState extends State<HomeScreen> {
                                         final job = jobList[index];
                                         return JobCard(
                                           job: job,
+                                          favList: favJobList,
                                           onTap: () {
                                             Navigator.pushNamed(
                                               context,

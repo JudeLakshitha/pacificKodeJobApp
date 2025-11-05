@@ -1,22 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:job_app/widgets/tag_card.dart';
+import '../common/common.dart';
+import '../models/favourite_job.dart';
 import '../models/job.dart';
 
 class JobCard extends StatefulWidget {
   final Job job;
   final VoidCallback onTap;
+  final List<FavouriteJob> favList;
 
-  const JobCard({super.key, required this.job, required this.onTap});
+  const JobCard({
+    super.key,
+    required this.job,
+    required this.onTap,
+    required this.favList,
+  });
 
   @override
   JobCardState createState() => JobCardState();
 }
 
 class JobCardState extends State<JobCard> {
-  bool isFavourite = false;
   @override
   Widget build(BuildContext context) {
+    bool isFavourite = favJobList.any(
+      (fav) => fav.job.jobId == widget.job.jobId,
+    );
     return InkWell(
       onTap: widget.onTap,
       child: Card(
@@ -55,6 +65,17 @@ class JobCardState extends State<JobCard> {
                       setState(() {
                         isFavourite = !isFavourite;
                       });
+                      if (isFavourite) {
+                        FavouriteJob favJob = FavouriteJob(
+                          job: widget.job,
+                          isFav: true,
+                        );
+                        favJobList.add(favJob);
+                      } else {
+                        favJobList.removeWhere(
+                          (element) => element.job.jobId == widget.job.jobId,
+                        );
+                      }
                     },
                   ),
                 ],

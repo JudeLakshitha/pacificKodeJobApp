@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_app/screens/favourites/view/favourite_screen.dart';
 import 'package:job_app/screens/home/view/home_screen.dart';
 import 'package:job_app/screens/job_details/view/job_details_screen.dart';
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const HomeScreen(),
         '/jobDetailScreen': (context) => const JobDetailsScreen(),
+        '/favoriteScreen': (context) => const FavouriteScreen(),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
