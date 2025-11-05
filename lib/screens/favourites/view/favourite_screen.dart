@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:job_app/common/common.dart';
+import 'package:provider/provider.dart';
 
+import '../../../utils/theme/base_theme.dart';
+import '../../../utils/theme/theme_provider.dart';
 import '../../../widgets/job_card.dart';
 
 class FavouriteScreen extends StatelessWidget {
@@ -11,8 +14,10 @@ class FavouriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    BaseTheme baseTheme = themeProvider.colors;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: baseTheme.backgroundColor,
       appBar: AppBar(
         title: Text(
           'Favourites',

@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:job_app/models/job.dart';
+import 'package:provider/provider.dart';
+
+import '../../../utils/theme/base_theme.dart';
+import '../../../utils/theme/theme_provider.dart';
 
 class JobDetailsScreen extends StatelessWidget {
   static const routeName = '/jobDetailScreen';
@@ -9,9 +13,11 @@ class JobDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    BaseTheme baseTheme = themeProvider.colors;
     final Job job = ModalRoute.of(context)!.settings.arguments as Job;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: baseTheme.backgroundColor,
       appBar: AppBar(
         title: Text(
           'Job Details',
@@ -27,7 +33,11 @@ class JobDetailsScreen extends StatelessWidget {
           children: [
             Text(
               job.title,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                color: baseTheme.textColor,
+              ),
             ),
             SizedBox(height: 16),
             Text(
@@ -41,17 +51,24 @@ class JobDetailsScreen extends StatelessWidget {
             SizedBox(height: 8),
             Text(
               job.fullDescription,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: baseTheme.textColor),
               textAlign: TextAlign.justify,
             ),
             SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Job Type: ", style: TextStyle(fontSize: 16)),
+                Text(
+                  "Job Type: ",
+                  style: TextStyle(fontSize: 16, color: baseTheme.textColor),
+                ),
                 Text(
                   job.jobType,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: baseTheme.textColor,
+                  ),
                 ),
               ],
             ),
@@ -60,10 +77,17 @@ class JobDetailsScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Location: ", style: TextStyle(fontSize: 16)),
+                Text(
+                  "Location: ",
+                  style: TextStyle(fontSize: 16, color: baseTheme.textColor),
+                ),
                 Text(
                   job.location,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: baseTheme.textColor,
+                  ),
                 ),
               ],
             ),
@@ -73,17 +97,17 @@ class JobDetailsScreen extends StatelessWidget {
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
-                  side: BorderSide(width: 1.0),
+                  side: BorderSide(width: 1.0, color: baseTheme.textColor),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   "Apply Now",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    color: Colors.black,
+                    color: baseTheme.textColor,
                   ),
                 ),
               ),

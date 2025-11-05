@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:job_app/repositories/home_repository.dart';
 import 'package:job_app/screens/home/bloc/home_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import '../../../common/common.dart';
 import '../../../data/data.dart';
 import '../../../models/job.dart';
+import '../../../utils/theme/base_theme.dart';
+import '../../../utils/theme/theme_provider.dart';
 import '../../../widgets/job_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,6 +28,8 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    BaseTheme baseTheme = themeProvider.colors;
     return BlocProvider<HomeBloc>(
       create: (context) => HomeBloc(HomeRepository())..add(LoadJobListEvent()),
       child: BlocListener<HomeBloc, HomeState>(
@@ -52,7 +57,7 @@ class HomeScreenState extends State<HomeScreen> {
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             return Scaffold(
-              backgroundColor: Colors.white,
+              backgroundColor: baseTheme.backgroundColor,
               appBar: AppBar(
                 title: Text(
                   'Jobs',
@@ -69,6 +74,16 @@ class HomeScreenState extends State<HomeScreen> {
                     ),
                     onPressed: () {
                       Navigator.pushNamed(context, '/favoriteScreen');
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.nightlight_outlined,
+                      color: Colors.black,
+                      size: 24,
+                    ),
+                    onPressed: () {
+
                     },
                   ),
                 ],
@@ -110,6 +125,7 @@ class HomeScreenState extends State<HomeScreen> {
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
+                                        color: baseTheme.textColor,
                                       ),
                                       decoration: InputDecoration(
                                         hintText:
@@ -124,7 +140,7 @@ class HomeScreenState extends State<HomeScreen> {
                                             16,
                                           ),
                                           borderSide: BorderSide(
-                                            color: Colors.black,
+                                            color: baseTheme.borderColor,
                                             width: 1.0,
                                           ),
                                         ),
@@ -133,7 +149,7 @@ class HomeScreenState extends State<HomeScreen> {
                                             16,
                                           ),
                                           borderSide: BorderSide(
-                                            color: Colors.black,
+                                            color: baseTheme.borderColor,
                                             width: 1.0,
                                           ),
                                         ),
