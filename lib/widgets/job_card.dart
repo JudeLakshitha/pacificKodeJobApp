@@ -67,7 +67,7 @@ class JobCardState extends State<JobCard> {
                       color: isFavourite ? Colors.red : baseTheme.textColor,
                       size: 24,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       setState(() {
                         isFavourite = !isFavourite;
                       });
@@ -82,6 +82,7 @@ class JobCardState extends State<JobCard> {
                           (element) => element.job.jobId == widget.job.jobId,
                         );
                       }
+                      await saveFavList("fav_key", favJobList);
                     },
                   ),
                 ],

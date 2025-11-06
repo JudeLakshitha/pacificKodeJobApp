@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:job_app/models/favourite_job.dart';
 import 'package:job_app/repositories/home_repository.dart';
 import 'package:job_app/screens/home/bloc/home_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +25,22 @@ class HomeScreenState extends State<HomeScreen> {
   List<Job> filterJobList = [];
   TextEditingController searchTextController = TextEditingController();
   bool isLoading = false;
+
+  @override
+  void initState() {
+    getPrefData();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchTextController.dispose();
+  }
+
+  void getPrefData() async {
+    favJobList = (await retriveFavList("fav_key"))!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +98,7 @@ class HomeScreenState extends State<HomeScreen> {
                       color: Colors.black,
                       size: 24,
                     ),
-                    onPressed: () {
-
-                    },
+                    onPressed: () {},
                   ),
                 ],
               ),
