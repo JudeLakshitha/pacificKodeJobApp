@@ -22,6 +22,14 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  ThemeMode themeMode = ThemeMode.system;
+
+  void toggleThemeType(ThemeMode mode) {
+    setState(() {
+      themeMode = mode;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -50,9 +58,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         '/jobDetailScreen': (context) => const JobDetailsScreen(),
         '/favoriteScreen': (context) => const FavouriteScreen(),
       },
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      themeMode: themeMode,
       //home: const HomeScreen(),
     );
   }
@@ -61,6 +67,6 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
     var brightness =
         SchedulerBinding.instance.platformDispatcher.platformBrightness;
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-    themeProvider.setTheme(brightness);
+    themeProvider.updateTheme(brightness);
   }
 }

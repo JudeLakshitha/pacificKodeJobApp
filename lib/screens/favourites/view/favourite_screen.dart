@@ -62,6 +62,7 @@ class FavouriteScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
+                        color: baseTheme.textColor,
                       ),
                     ),
                   ),

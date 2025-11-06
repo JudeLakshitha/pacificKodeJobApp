@@ -7,13 +7,16 @@ class ApiHelper {
   ApiHelper();
 
   Future<dynamic> apiGet(
-      String endpoint, {
-        Map<String, dynamic>? queryParams,
-      }) async {
+    String endpoint, {
+    Map<String, dynamic>? queryParams,
+  }) async {
     Map<String, String>? headers = {'Content-Type': 'application/json'};
 
     try {
-      final response = await http.get(Uri.parse('$baseUrl/$endpoint'), headers: headers);
+      final response = await http.get(
+        Uri.parse('$baseUrl/$endpoint'),
+        headers: headers,
+      );
       return handleSuccessResponse(response);
     } on SocketException {
       return handleErrorResponse();
@@ -22,13 +25,12 @@ class ApiHelper {
 
   dynamic handleSuccessResponse(http.Response response) {
     final jsonResponse = jsonDecode(response.body);
-    if (jsonResponse['data'] is List) {
-      jsonResponse['data'] = List<Map<String, dynamic>>.from(
-        jsonResponse['data'],
-      );
+    final jResponse = jsonResponse["record"];
+    if (jResponse['data'] is List) {
+      jResponse['data'] = List<Map<String, dynamic>>.from(jResponse['data']);
     }
-    jsonResponse['status'] = response.statusCode.toString();
-    return jsonResponse;
+    jResponse['status'] = response.statusCode.toString();
+    return jResponse;
   }
 
   dynamic handleErrorResponse() {

@@ -5,7 +5,6 @@ import 'package:job_app/screens/home/bloc/home_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import '../../../common/common.dart';
-import '../../../data/data.dart';
 import '../../../models/job.dart';
 import '../../../utils/theme/base_theme.dart';
 import '../../../utils/theme/theme_provider.dart';
@@ -21,8 +20,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  //List<Job> jobList = [];
-  List<Job> filterJobList = jobList;
+  List<Job> jobList = [];
+  List<Job> filterJobList = [];
   TextEditingController searchTextController = TextEditingController();
   bool isLoading = false;
 
@@ -41,8 +40,8 @@ class HomeScreenState extends State<HomeScreen> {
           } else if (state is LoadedJobListState) {
             setState(() {
               isLoading = false;
-              //jobList = state.jobList;
-              //filterJobList = state.jobList;
+              jobList = state.jobList;
+              filterJobList = state.jobList;
             });
           } else if (state is ErrorJobListState) {
             setState(() {
